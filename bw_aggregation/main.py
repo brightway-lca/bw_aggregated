@@ -16,6 +16,7 @@ from fs.zipfs import ZipFS
 
 from .calculator import AggregationCalculator
 from .override import AggregationContext, aggregation_override
+from .estimator import CalculationDifferenceEstimator
 
 
 class ObsoleteAggregatedDatapackage(Exception):
@@ -82,7 +83,7 @@ class AggregatedDatabase(SQLiteBackend):
 
         Prints to `stdout` and return a float, the ratio of calculation speed with aggregation
         to speed without aggregation."""
-        pass
+        return CalculationDifferenceEstimator(database_name).difference()
 
     @staticmethod
     def convert_existing(database_name: str) -> None:
@@ -167,7 +168,7 @@ class AggregatedDatabase(SQLiteBackend):
         if process:
             self.process_aggregated()
 
-    def process_aggregated(self, in_memory: bool = False) -> None:
+    def process_aggregated(self, in_memory: bool = False) -> Datapackage:
         """Create structured arrays for the aggregated biosphere emissions, and for unitary production."""
         # Try to avoid race conditions - but no guarantee
         self.metadata["aggregation_calculation_timestamp"] = dt.now().isoformat()
@@ -199,3 +200,4 @@ class AggregatedDatabase(SQLiteBackend):
         )
         if not in_memory:
             dp.finalize_serialization()
+        return dp

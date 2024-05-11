@@ -5,6 +5,7 @@ __all__ = (
     "AggregatedDatabase",
     "AggregationContext",
     "ObsoleteAggregatedDatapackage",
+    "Speedup",
 )
 
 __version__ = "0.0.1"
@@ -18,6 +19,7 @@ from bw2data.subclass_mapping import (
 
 from .main import AggregatedDatabase, ObsoleteAggregatedDatapackage
 from .override import AggregationContext
+from .estimator import Speedup
 
 DATABASE_BACKEND_MAPPING["aggregated"] = AggregatedDatabase
 NODE_PROCESS_CLASS_MAPPING["aggregated"] = Activity
