@@ -4,7 +4,6 @@ from time import time
 from bw2calc import LCA
 from bw2data import Database, prepare_lca_inputs
 
-from .calculator import AggregationCalculator
 from .override import AggregationContext
 
 
@@ -27,7 +26,8 @@ class CalculationDifferenceEstimator:
         with_ = self.calculate_with_speedup()
         return Speedup(
             database_name=self.name,
-            time_difference_relative=with_ / without,
+            # Timer on Windows is coarse, could be zero for small databases
+            time_difference_relative=(with_ / without if without > 0 else 0),
             time_difference_absolute=with_ - without,
             time_with_aggregation=with_,
             time_without_aggregation=without,
