@@ -55,7 +55,7 @@ def check_b_database_matrices_aggregated(lca: LCA):
     assert lca.biosphere_matrix[:, lca.dicts.activity[node.id]].sum() != 7
 
 
-@pytest.skipif(
+@pytest.mark.skipif(
     sys.platform.startswith("win"), reason="Error on cleanup deleting tmpdir"
 )
 def test_convert_existing(background):
