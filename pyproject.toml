@@ -32,9 +32,9 @@ dependencies = [
     # dependencies as strings with quotes, e.g. "foo"
     # You can add version requirements like "foo>2.0"
     "bw2calc>1.99",
-    "bw2data>3.99",
-    "bw_graph_tools",
-    "bw_processing",
+    "bw2data>=4.0.dev36",
+    "bw_graph_tools>=0.3.1",
+    "bw_processing>=0.9.3",
     "fs",
     "matrix_utils",
     "numpy<2",
