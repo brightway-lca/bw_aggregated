@@ -76,7 +76,7 @@ bwa.AggregatedDatabase.convert_existing("<database label>")
 
 From now on, calling `bw2data.Database("<database label>")` will return an instance of `AggregatedDatabase`. You can do everything you normally would with this database, including making changes.
 
-> :warning: Any **existing `Database("<database label>")` reference is out of date**: You need to create new `Database` object references.
+> :warning: Any **existing `Database("<database label>")` reference is out of date**: You need to create new `Database` class instances.
 
 The conversion command will also set the default to use the aggregated values during calculations. You can change the default back to using unit process data with:
 
@@ -134,9 +134,9 @@ This library gets the possibility of using both aggregated and unit process data
 ```
 if global_context is True:
     load_aggregated()
-elif local_context(me) is True:
+elif local_context(this_database) is True:
     load_aggregated()
-elif me.perfer_aggregated is True:
+elif this_database.prefer_aggregated is True:
     load_aggregated()
 else:
     load_unit_process()
