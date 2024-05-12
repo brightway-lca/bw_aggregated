@@ -17,9 +17,9 @@ from bw2data.subclass_mapping import (
     NODE_PROCESS_CLASS_MAPPING,
 )
 
+from .estimator import Speedup
 from .main import AggregatedDatabase, ObsoleteAggregatedDatapackage
 from .override import AggregationContext
-from .estimator import Speedup
 
 DATABASE_BACKEND_MAPPING["aggregated"] = AggregatedDatabase
 NODE_PROCESS_CLASS_MAPPING["aggregated"] = Activity

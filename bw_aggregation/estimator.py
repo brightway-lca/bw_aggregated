@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from time import time
 
 from bw2calc import LCA
-from bw2data import prepare_lca_inputs, Database
+from bw2data import Database, prepare_lca_inputs
 
 from .calculator import AggregationCalculator
 from .override import AggregationContext

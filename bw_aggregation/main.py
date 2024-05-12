@@ -15,8 +15,8 @@ from bw_processing import (
 from fs.zipfs import ZipFS
 
 from .calculator import AggregationCalculator
-from .override import AggregationContext, aggregation_override
 from .estimator import CalculationDifferenceEstimator
+from .override import AggregationContext, aggregation_override
 
 
 class ObsoleteAggregatedDatapackage(Exception):
