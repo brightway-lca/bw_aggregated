@@ -1,3 +1,5 @@
+import sys
+
 import numpy as np
 import pytest
 from bw2calc import LCA
@@ -53,6 +55,9 @@ def check_b_database_matrices_aggregated(lca: LCA):
     assert lca.biosphere_matrix[:, lca.dicts.activity[node.id]].sum() != 7
 
 
+@pytest.skipif(
+    sys.platform.startswith("win"), reason="Error on cleanup deleting tmpdir"
+)
 def test_convert_existing(background):
     AggregatedDatabase.convert_existing("a")
     assert databases["a"]["backend"] == "aggregated"
