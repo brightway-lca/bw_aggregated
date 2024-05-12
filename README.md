@@ -54,7 +54,19 @@ bwa.AggregatedDatabase.estimate_speedup("<database label>")
 
 That will return something like:
 
-TBD
+```python
+Speedup(
+    database_name='ecoinvent-3.10-cutoff', 
+    time_with_aggregation=4.297600030899048, 
+    time_without_aggregation=2.22904896736145, 
+    time_difference_absolute=2.0685510635375977, 
+    time_difference_relative=1.9279971386120622
+)
+```
+
+The times reported include `LCA` object creation, data loading, matrix construcion, and inventory calculations.
+
+As you can see, creating aggregated activities to avoid solving linear systems will not always lead to faster calculations, as the linear algebra libraries we use are pretty fast, and loading lots of data into the biosphere can take a lot of time. Please check on potential speedups before deciding to aggregate background databases.
 
 If you want to convert that database, you can with:
 
