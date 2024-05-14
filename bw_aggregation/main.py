@@ -1,8 +1,5 @@
-import warnings
 from datetime import datetime as dt
 
-import tqdm
-from bw2calc import LCA, PYPARDISO
 from bw2data import databases
 from bw2data.backends import SQLiteBackend
 from bw_processing import (
@@ -15,14 +12,10 @@ from bw_processing import (
 from fs.zipfs import ZipFS
 
 from .calculator import AggregationCalculator
-from .estimator import CalculationDifferenceEstimator
+from .errors import IncompatibleDatabase, ObsoleteAggregatedDatapackage
+from .estimator import CalculationDifferenceEstimator, Speedup
 from .override import AggregationContext, aggregation_override
-
-
-class ObsoleteAggregatedDatapackage(Exception):
-    """The results from this aggregated datapackage are obsolete"""
-
-    pass
+from .utils import check_processes_in_data, check_processes_in_database
 
 
 class AggregatedDatabase(SQLiteBackend):
@@ -78,7 +71,7 @@ class AggregatedDatabase(SQLiteBackend):
         )
 
     @staticmethod
-    def estimate_speedup(database_name: str) -> float:
+    def estimate_speedup(database_name: str) -> Speedup:
         """Estimate how much quicker calculations could be when using aggregated emissions.
 
         Prints to `stdout` and return a float, the ratio of calculation speed with aggregation
@@ -93,6 +86,10 @@ class AggregatedDatabase(SQLiteBackend):
         if databases[database_name]["backend"] == "aggregated":
             print(f"Database '{database_name}' is already aggregated")
             return
+        if not check_processes_in_database(database_name):
+            raise IncompatibleDatabase(
+                "This database only has biosphere flows, and can't be aggregated."
+            )
 
         db = AggregatedDatabase(database_name)
         db.process_aggregated()
@@ -163,6 +160,11 @@ class AggregatedDatabase(SQLiteBackend):
                 AggregatedDatabase(db_name).refresh()
 
     def write(self, data, process=True, searchable=True) -> None:
+        if not check_processes_in_data(data.values()):
+            raise IncompatibleDatabase(
+                "This data only has biosphere flows, and can't be aggregated."
+            )
+
         super().write(data=data, process=process, searchable=searchable)
 
         if process:

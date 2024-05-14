@@ -7,6 +7,7 @@ from bw2data import Database, databases, get_node
 from bw2data.backends import SQLiteBackend
 
 from bw_aggregation import AggregatedDatabase, ObsoleteAggregatedDatapackage
+from bw_aggregation.errors import IncompatibleDatabase
 
 
 def check_a_database_matrices_unaggregated(lca: LCA):
@@ -266,3 +267,8 @@ def test_refresh_all(background):
 
     assert Database("a").aggregation_datapackage_valid()
     assert Database("b").aggregation_datapackage_valid()
+
+
+def test_incompatible_database_only_biosphere_flows(background):
+    with pytest.raises(IncompatibleDatabase):
+        AggregatedDatabase.convert_existing("bio")

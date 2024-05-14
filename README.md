@@ -56,11 +56,11 @@ That will return something like:
 
 ```python
 Speedup(
-    database_name='ecoinvent-3.10-cutoff', 
-    time_with_aggregation=4.297600030899048, 
-    time_without_aggregation=2.22904896736145, 
-    time_difference_absolute=2.0685510635375977, 
-    time_difference_relative=1.9279971386120622
+    database_name='USEEIO-2.0',
+    time_with_aggregation=0.06253910064697266,
+    time_without_aggregation=0.026948928833007812,
+    time_difference_absolute=0.035590171813964844,
+    time_difference_relative=2.3206525585674855
 )
 ```
 

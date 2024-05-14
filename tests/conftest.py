@@ -90,6 +90,7 @@ def background():
                 },
             ],
         },
+        ("a", "4"): {"name": "CO2", "type": "emission", "exchanges": []},
     }
     Database("a").write(a_data)
 

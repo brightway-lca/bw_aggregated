@@ -1,7 +1,7 @@
 from time import time
 
 import numpy as np
-from bw2calc import LCA, PYPARDISO, spsolve
+from bw2calc import LCA, spsolve
 from bw2data import databases, prepare_lca_inputs
 from bw2data.database import DatabaseChooser
 from bw_graph_tools import guess_production_exchanges
@@ -34,7 +34,11 @@ class AggregationCalculator:
         prod_rows, prod_cols = guess_production_exchanges(self.lca.technosphere_mm)
         # Not very efficient; could be SQL query but that would break IOTable
         matrix_db_process_ids = np.array(
-            [self.lca.dicts.activity[obj.id] for obj in self.db]
+            [
+                self.lca.dicts.activity[obj.id]
+                for obj in self.db
+                if obj.get("type", "process") == "process"
+            ]
         )
 
         # Get boolean mask for the column indices of the processes in the database
