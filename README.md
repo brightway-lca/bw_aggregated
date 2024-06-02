@@ -48,7 +48,7 @@ As these downsides are significant, this library keeps *both the unit process an
 Start by getting an estimate on how much faster an aggregated calculation would be with:
 
 ```python
-import bw_aggregated as bwa
+import bw_aggregation as bwa
 bwa.AggregatedDatabase.estimate_speedup("<database label>")
 ```
 
