@@ -37,7 +37,7 @@ dependencies = [
     "bw_processing>=0.9.3",
     "fs",
     "matrix_utils",
-    "numpy<2",
+    "numpy<3",
 ]
 
 [project.urls]
